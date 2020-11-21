@@ -69,8 +69,6 @@ function countChildrenBy(list, keyGetter) {
   return map
 }
 
-item.childrenIds.forEach((childId) => {children.push(miro.board.widgets.get({id: childId})})
-
 miro.onReady(() => {
   miro.addListener('SELECTION_UPDATED', (e) => {
     showStatistics(e.data)
