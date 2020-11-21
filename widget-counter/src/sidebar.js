@@ -60,8 +60,9 @@ function countChildrenBy(list, keyGetter) {
   let map = new Map()
   list.forEach((item) => {
     item.childrenIds.forEach((childId) => {
-      let child = miro.board.widgets.get({id: childId})
-      children.push(child)
+      miro.board.widgets.get({id: childId}).then((child) => {
+        children.push(child)
+      })
     })
     const key = keyGetter(item)
     map.set(key, children.length)
