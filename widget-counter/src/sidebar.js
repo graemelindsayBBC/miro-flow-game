@@ -43,7 +43,7 @@ function createStatTable(title, emptyText, data) {
 }
 
 function calcByType(widgets) {
-  return countBy(widgets, (a) => a.type)
+  return countChildrenBy(widgets, (a) => a.type)
 }
 
 function countBy(list, keyGetter) {
@@ -55,6 +55,20 @@ function countBy(list, keyGetter) {
   })
   return new Map([...map.entries()].sort((a, b) => b[1] - a[1]))
 }
+
+function countChildrenBy(list, keyGetter) {
+  const map = new Map()
+  list.forEach((widget) => {
+    widget.childrenIds.forEach((childId) => {
+      let child = miro.board.widgets.get({id: childId})
+      children.push(child)
+    }
+    map.set(keyGetter(widget), children.length)
+  }
+  return map
+}
+
+item.childrenIds.forEach((childId) => {children.push(miro.board.widgets.get({id: childId})})
 
 miro.onReady(() => {
   miro.addListener('SELECTION_UPDATED', (e) => {
