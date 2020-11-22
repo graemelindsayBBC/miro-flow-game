@@ -68,6 +68,9 @@ function countChildrenBy(list, keyGetter) {
           if (FILTER.localeCompare(child.type, undefined, { sensitivity: 'accent' }) === 0) {
             const key = keyGetter(item)
             let childCount = map.get(key)
+            if (!childCount) {
+              childCount = 0
+            }
             map.set(key, childCount++)
           }
         }
