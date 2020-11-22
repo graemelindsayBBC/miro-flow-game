@@ -66,13 +66,13 @@ function countChildrenBy(list, keyGetter) {
         if (filterMatches.length == 1) {
           let child = filterMatches[0]
           if (FILTER.localeCompare(child.type, undefined, { sensitivity: 'accent' }) === 0) {
-            children.push(child)
+            const key = keyGetter(item)
+            let childCount = map.get(key)
+            map.set(key, childCount++)
           }
         }
       })
     })
-    const key = keyGetter(item)
-    map.set(key, children.length)
   })
   return map
 }
