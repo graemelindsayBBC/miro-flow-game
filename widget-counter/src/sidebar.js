@@ -63,8 +63,8 @@ function countChildrenBy(list, keyGetter) {
     const children = new Array()
     item.childrenIds.forEach((childId) => {
       miro.board.widgets.get({id: childId}).then((filterMatches) => {
-        if (filterMatches.length == 0) {
-          child = filterMatches[0]
+        if (filterMatches.length == 1) {
+          let child = filterMatches[0]
           if (FILTER.equalsIgnoreCase(child.type)) {
             children.push(child)
           }
