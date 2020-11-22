@@ -65,7 +65,7 @@ function countChildrenBy(list, keyGetter) {
       miro.board.widgets.get({id: childId}).then((filterMatches) => {
         if (filterMatches.length == 1) {
           let child = filterMatches[0]
-          if (FILTER.equalsIgnoreCase(child.type)) {
+          if (FILTER.localeCompare(child.type, undefined, { sensitivity: 'accent' }) === 0) {
             children.push(child)
           }
         }
