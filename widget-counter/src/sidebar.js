@@ -43,7 +43,7 @@ function createStatTable(title, emptyText, data) {
 }
 
 function calcByType(widgets) {
-  return countChildrenBy(widgets, (a) => a.type)
+  return countChildrenBy(widgets, (a) => a.title)
 }
 
 function countBy(list, keyGetter) {
@@ -57,12 +57,18 @@ function countBy(list, keyGetter) {
 }
 
 function countChildrenBy(list, keyGetter) {
+  const FILTER = "sticker"
   const map = new Map()
   list.forEach((item) => {
     const children = new Array()
     item.childrenIds.forEach((childId) => {
-      miro.board.widgets.get({id: childId}).then((child) => {
-        children.push(child)
+      miro.board.widgets.get({id: childId}).then((filterMatches) => {
+        if (filterMatches.length == 0) {
+          child = filterMatches[0]
+          if (FILTER.equalsIgnoreCase(child.type)) {
+            children.push(child)
+          }
+        }
       })
     })
     const key = keyGetter(item)
