@@ -1,6 +1,6 @@
 function showStatistics(stickers) {
   clear()
-  const statByType = calcByType(stickers)
+  let statByType = await calcByType(stickers)
   getContainer().appendChild(createStatTable('by State', 'GG Looks like the selection is empty.', statByType))
 }
 
@@ -59,17 +59,17 @@ function countBy(list, keyGetter) {
 function countChildrenBy(stickers) {
   const stickerIds = stickers.map(sticker => sticker.id)
   const countByFrame = new Map()
-  miro.board.widgets.get({ type: "frame" }).then(frames => {
+  return miro.board.widgets.get({ type: "frame" }).then(frames => {
     frames.forEach(frame => {
       frame.childrenIds.forEach(childId => {
         if (stickerIds.includes(childId)) {
           let currentCount = countByFrame.get(frame.id)
           countByFrame.set(frame.id, !currentCount ? 1 : currentCount + 1)
+          return countByFrame
         }
       })
     })
   })
-  return countByFrame
 }
 
 
