@@ -43,7 +43,7 @@ function createStatTable(title, emptyText, data) {
 }
 
 function calcByType(stickers) {
-  return await countChildrenBy(stickers, (a) => a.title)
+  return countChildrenBy(stickers, (a) => a.title)
 }
 
 function countBy(list, keyGetter) {
@@ -59,7 +59,7 @@ function countBy(list, keyGetter) {
 async function countChildrenBy(stickers) {
   const stickerIds = stickers.map(sticker => sticker.id)
   const countByFrame = new Map()
-  return miro.board.widgets.get({ type: "frame" }).then(frames => {
+  miro.board.widgets.get({ type: "frame" }).then(frames => {
     frames.forEach(frame => {
       frame.childrenIds.forEach(childId => {
         if (stickerIds.includes(childId)) {
