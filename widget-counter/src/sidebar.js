@@ -1,6 +1,6 @@
 function showStatistics(stickers) {
   clear()
-  let statByType = await calcByType(stickers)
+  let statByType = calcByType(stickers)
   getContainer().appendChild(createStatTable('by State', 'GG Looks like the selection is empty.', statByType))
 }
 
@@ -43,7 +43,7 @@ function createStatTable(title, emptyText, data) {
 }
 
 function calcByType(stickers) {
-  return countChildrenBy(stickers, (a) => a.title)
+  return await countChildrenBy(stickers, (a) => a.title)
 }
 
 function countBy(list, keyGetter) {
