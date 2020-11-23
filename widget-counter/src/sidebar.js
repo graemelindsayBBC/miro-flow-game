@@ -1,6 +1,6 @@
-function showStatistics(stickers) {
+async function showStatistics(stickers) {
   clear()
-  let statByType = calcByType(stickers)
+  let statByType = await calcByType(stickers)
   getContainer().appendChild(createStatTable('by State', 'GG Looks like the selection is empty.', statByType))
 }
 
