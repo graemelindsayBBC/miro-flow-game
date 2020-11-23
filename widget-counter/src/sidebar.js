@@ -57,11 +57,12 @@ function countBy(list, keyGetter) {
 }
 
 function countChildrenBy(stickers) {
+  const stickerIds = sticker.map(sticker => sticker.id)
   const countByFrame = new Map()
   miro.board.widgets.get({ type: "frame" }).then(frames => {
     frames.forEach(frame => {
       frame.childrenIds.forEach(childId => {
-        if (stickers.includes(childId)) {
+        if (stickerIds.includes(childId)) {
           let currentCount = countByFrame.get(frame.id)
           if (!currentCount) {
             currentCount = 0
