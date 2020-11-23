@@ -64,11 +64,7 @@ function countChildrenBy(stickers) {
       frame.childrenIds.forEach(childId => {
         if (stickerIds.includes(childId)) {
           let currentCount = countByFrame.get(frame.id)
-          if (!currentCount) {
-            currentCount = 0
-          }
-          currentCount++
-          countByFrame.set(frame.id, currentCount)
+          countByFrame.set(frame.id, !currentCount ? 1 : currentCount + 1)
         }
       })
     })
