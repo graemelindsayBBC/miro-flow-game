@@ -1,7 +1,7 @@
-function showStatistics(selection) {
+function showStatistics(stickers) {
   clear()
-  const statByType = calcByType(selection)
-  getContainer().appendChild(createStatTable('by Type', 'GG Looks like the selection is empty.', statByType))
+  const statByType = calcByType(stickers)
+  getContainer().appendChild(createStatTable('by State', 'GG Looks like the selection is empty.', statByType))
 }
 
 function clear() {
@@ -42,8 +42,8 @@ function createStatTable(title, emptyText, data) {
   return statView
 }
 
-function calcByType(widgets) {
-  return countChildrenBy(widgets, (a) => a.title)
+function calcByType(stickers) {
+  return countChildrenBy(stickers, (a) => a.title)
 }
 
 function countBy(list, keyGetter) {
@@ -56,33 +56,56 @@ function countBy(list, keyGetter) {
   return new Map([...map.entries()].sort((a, b) => b[1] - a[1]))
 }
 
-function countChildrenBy(list, keyGetter) {
-  const FILTER = "sticker"
-  const map = new Map()
-  list.forEach((item) => {
-    const children = new Array()
-    item.childrenIds.forEach((childId) => {
-      miro.board.widgets.get({id: childId}).then((filterMatches) => {
-        if (filterMatches.length == 1) {
-          let child = filterMatches[0]
-          if (FILTER.localeCompare(child.type, undefined, { sensitivity: 'accent' }) === 0) {
-            const key = keyGetter(item)
-            let childCount = map.get(key)
-            if (!childCount) {
-              childCount = 0
-            }
-            map.set(key, childCount++)
-          }
+function countChildrenBy(stickers) {
+  const countByFrame = new Map()
+  miro.board.widgets.get({ type: "frame" }).then(frame => {
+    frame.childrenIds.forEach(childId => {
+      if (stickers.includes(childId)) {
+        let currentCount = countByFrame.get(frame.id)
+        if (!currentCount) {
+          currentCount = 0
         }
-      })
+        countByFrame.set(frame.id, currentCount++)
+      }
     })
   })
-  return map
+  return countByFrame
 }
+
+
+
+
+//   const FILTER = "sticker"
+//   const map = new Map()
+//   const allStickers = new Array()
+//   miro.board.widgets.get({type: FILTER}).then((stickers) => {
+
+
+
+
+//   list.forEach((item) => {
+//     item.childrenIds.forEach((childId) => {
+//       miro.board.widgets.get({id: childId}).then((filterMatches) => {
+//         if (filterMatches.length == 1) {
+//           let child = filterMatches[0]
+//           if (FILTER.localeCompare(child.type, undefined, { sensitivity: 'accent' }) === 0) {
+//             const key = keyGetter(item)
+//             let childCount = map.get(key)
+//             if (!childCount) {
+//               childCount = 0
+//             }
+//             map.set(key, childCount++)
+//           }
+//         }
+//       })
+//     })
+//   })
+//   return map
+// }
 
 miro.onReady(() => {
   miro.addListener('SELECTION_UPDATED', (e) => {
     showStatistics(e.data)
   })
-  miro.board.widgets.get({type: "frame"}).then(showStatistics)
+  miro.board.widgets.get({type: "sticker"}).then(showStatistics)
 })
