@@ -1,6 +1,6 @@
-async function showStatistics(stickers) {
+function showStatistics(stickers) {
   clear()
-  let statByType = await calcByType(stickers)
+  let statByType = calcByType(stickers)
   getContainer().appendChild(createStatTable('by State', 'GG Looks like the selection is empty.', statByType))
 }
 
@@ -43,7 +43,9 @@ function createStatTable(title, emptyText, data) {
 }
 
 function calcByType(stickers) {
-  return countChildrenBy(stickers, (a) => a.title)
+  countChildrenBy(stickers, (a) => a.title).then(typeStats => {
+    return typeStats
+  })
 }
 
 function countBy(list, keyGetter) {
@@ -65,10 +67,10 @@ async function countChildrenBy(stickers) {
         if (stickerIds.includes(childId)) {
           let currentCount = countByFrame.get(frame.id)
           countByFrame.set(frame.id, !currentCount ? 1 : currentCount + 1)
-          return countByFrame
         }
       })
     })
+    return countByFrame
   })
 }
 
