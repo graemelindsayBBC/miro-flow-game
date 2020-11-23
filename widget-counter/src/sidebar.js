@@ -56,7 +56,7 @@ function countBy(list, keyGetter) {
   return new Map([...map.entries()].sort((a, b) => b[1] - a[1]))
 }
 
-function countChildrenBy(stickers) {
+async function countChildrenBy(stickers) {
   const stickerIds = stickers.map(sticker => sticker.id)
   const countByFrame = new Map()
   return miro.board.widgets.get({ type: "frame" }).then(frames => {
