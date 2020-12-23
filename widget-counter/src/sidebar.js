@@ -1,10 +1,6 @@
 function showStatistics(stickers) {
   clear()
-<<<<<<< HEAD
-  let statByType = calcByType(stickers)
-=======
   const statByType = calcByType(stickers)
->>>>>>> parent of 9bdd8a8... promises, promises
   getContainer().appendChild(createStatTable('by State', 'GG Looks like the selection is empty.', statByType))
 }
 
