@@ -24,12 +24,7 @@ function createStatTable(title, emptyText, data) {
   titleView.innerHTML = `<span>${title}</span>`
   statView.appendChild(titleView)
 
-  if (data.size === 0) {
-    const emptyView = document.createElement('div')
-    emptyView.className = 'stat-list__empty'
-    emptyView.innerText = emptyText
-    statView.appendChild(emptyView)
-  } else {
+  if (data && data.size > 0) {
     data.forEach((value, key) => {
       let itemView = document.createElement('div')
       itemView.className = 'stat-list__item'
@@ -38,7 +33,12 @@ function createStatTable(title, emptyText, data) {
         `<span class="stat-list__item-value">${value}</span>`
       statView.appendChild(itemView)
     })
-  }
+  } else {
+    const emptyView = document.createElement('div')
+    emptyView.className = 'stat-list__empty'
+    emptyView.innerText = emptyText
+    statView.appendChild(emptyView)
+  } 
   return statView
 }
 
