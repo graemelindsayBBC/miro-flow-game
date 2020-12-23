@@ -71,37 +71,6 @@ async function countChildrenBy(stickers) {
   return countByFrame
 }
 
-
-
-
-//   const FILTER = "sticker"
-//   const map = new Map()
-//   const allStickers = new Array()
-//   miro.board.widgets.get({type: FILTER}).then((stickers) => {
-
-
-
-
-//   list.forEach((item) => {
-//     item.childrenIds.forEach((childId) => {
-//       miro.board.widgets.get({id: childId}).then((filterMatches) => {
-//         if (filterMatches.length == 1) {
-//           let child = filterMatches[0]
-//           if (FILTER.localeCompare(child.type, undefined, { sensitivity: 'accent' }) === 0) {
-//             const key = keyGetter(item)
-//             let childCount = map.get(key)
-//             if (!childCount) {
-//               childCount = 0
-//             }
-//             map.set(key, childCount++)
-//           }
-//         }
-//       })
-//     })
-//   })
-//   return map
-// }
-
 miro.onReady(() => {
   miro.addListener('SELECTION_UPDATED', (e) => {
     showStatistics(e.data)
