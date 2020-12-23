@@ -75,5 +75,9 @@ miro.onReady(() => {
   miro.addListener('SELECTION_UPDATED', (e) => {
     showStatistics(e.data)
   })
-  miro.board.widgets.get({type: "sticker"}).then(showStatistics)
+  refresh()
 })
+
+function refresh() {
+  miro.board.widgets.get({type: "sticker"}).then(showStatistics)
+}
