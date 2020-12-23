@@ -67,8 +67,9 @@ async function countChildrenBy(stickers) {
         countByFrame.set(frame.title, !currentCount ? 1 : currentCount + 1)
       }
     })
-    return countByFrame
-  }
+  })
+  return countByFrame
+}
 
 
 
